@@ -17,26 +17,30 @@ namespace CMP1903_A1_2324
          */
 
         //Method
-        public void Test()
+        public bool Test()
         {
-            // Runs a test versio of the game, and checks the outputs of the rolls
+            // Runs a test version of the game, and checks the outputs of the rolls
             Game testGame = new Game();
             testGame.ExecuteGame();
+            Debug.Assert(testGame.TotalOfRolls() < 18);
 
             if (testGame.TotalOfRolls() < 18)
             {
                 if (testGame.TotalOfRolls() > 3)
                 {
                     Console.WriteLine("Total Is As Expected: " + testGame.TotalOfRolls());
+                    return true;
                 }
                 else
                 {
                     Console.WriteLine("Total Was Less Than 3, Which Is Impossible: " + testGame.TotalOfRolls());
+                    return false;
                 }
             }
             else
             {
                 Console.WriteLine("Total Was Greater Than 18, Which Is Impossible: " + testGame.TotalOfRolls());
+                return false;
             }
             
 
