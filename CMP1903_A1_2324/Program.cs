@@ -20,7 +20,7 @@ namespace CMP1903_A1_2324
             }
             else
             {
-                Console.WriteLine("Error when testing the application. Please ammend and restart")
+                Console.WriteLine("Error when testing the application. Please ammend and restart");
             }
             
         }
