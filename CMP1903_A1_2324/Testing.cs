@@ -23,27 +23,17 @@ namespace CMP1903_A1_2324
             Game testGame = new Game();
             testGame.ExecuteGame();
             Debug.Assert(testGame.TotalOfRolls() < 18);
-
-            if (testGame.TotalOfRolls() < 18)
+            var testTotalOfRolls = testGame.ValueRoll1 + testGame.ValueRoll2 + testGame.ValueRoll3;
+            if (testGame.TotalOfRolls() == testTotalOfRolls)
             {
-                if (testGame.TotalOfRolls() > 3)
-                {
                     Console.WriteLine("Total Is As Expected: " + testGame.TotalOfRolls());
                     return true;
-                }
-                else
-                {
-                    Console.WriteLine("Total Was Less Than 3, Which Is Impossible: " + testGame.TotalOfRolls());
-                    return false;
-                }
             }
             else
             {
-                Console.WriteLine("Total Was Greater Than 18, Which Is Impossible: " + testGame.TotalOfRolls());
+                Console.WriteLine("Total Is Noty As Expected, Error With Addition: " + testGame.TotalOfRolls() + "" + testTotalOfRolls);
                 return false;
             }
-            
-
         }
 
 
