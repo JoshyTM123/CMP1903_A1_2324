@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,50 +11,135 @@ namespace CMP1903_A1_2324
 {
     internal class Testing
     {
-        /*
-         * This class should test the Game and the Die class.
-         * Create a Game object, call the methods and compare their output to expected output.
-         * Create a Die object and call its method.
-         * Use debug.assert() to make the comparisons and tests.
-         */
-
-        Game _TestGame = new Game();
-        Die _TestDie = new Die();
-        private int _Roll1;
-        private int _Roll2;
-        private int _Roll3;
-        private int _Before3InARowTest = 0;
-        private int _After3InARowTest;
-
-
-        public string TestGame()
+        public void TestSevensOut()
         {
-            _TestGame.RollDie();
-            _Roll1 = _TestGame.GetRoll1();
-            _Roll2 = _TestGame.GetRoll2();
-            _Roll3 = _TestGame.GetRoll3();
-            _After3InARowTest = _TestGame.Get3InARowCount();
-            Debug.Assert(_Roll1 + _Roll2 + _Roll3 == _TestGame.GetTotal());
-            if (_Roll1 == _Roll2 && _Roll1 == _Roll3)
+            Game game = new Game();
+            game.RollDie("s");
+            //Tests the 7 detector
+            Debug.Assert(game.GetRoll(0) + game.GetRoll(1) == 7);
+
+            //Tests adding up 2 numbers not totalling 7 AND are not the same
+            if (game.GetRoll(1) == game.GetRoll(2))
             {
-                Debug.Assert(_Before3InARowTest != _After3InARowTest);
+                Debug.Assert(game.GetRoll(1) + game.GetRoll(2) == 11);
             }
-            else
+
+            //Tests adding up 2 numbers that are doubles
+            if (game.GetRoll(1) == game.GetRoll(3))
             {
-                Debug.Assert(_Before3InARowTest == _After3InARowTest);
+                Debug.Assert(((game.GetRoll(1) + game.GetRoll(3)) * 2) == 24);
             }
-            return "GAME TEST SUCCESSFUL";
+
+            Console.WriteLine("Seven Out Test Successful");
+        }
+
+        public void TestThreeOrMore()
+        {
+            Game game = new Game();
+            int DieShown;
+            int Count = 0;
+            int[] RollCount = new int[6];
+            game.RollDie("t");
+
+            //Testing finding 2 numbers the same
+            DieShown = 2;
+            for (int i = 0; i < DieShown; i++)
+            {
+                RollCount[game.GetRoll(i) - 1]++;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                if (RollCount[i] > Count)
+                {
+                    Count = RollCount[i];
+                }
+            }
+            Debug.Assert(Count == 2);
+
+            ResetRollCount(RollCount);
+            Count = 0;
+            //Testing finding 3 numbers the same
+            DieShown = 3;
+            for (int i = 0; i < DieShown; i++)
+            {
+                RollCount[game.GetRoll(i) - 1]++;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                if (RollCount[i] > Count)
+                {
+                    Count = RollCount[i];
+                }
+            }
+
+            Debug.Assert(Count == 3);
+
+            ResetRollCount(RollCount);
+            Count = 0;
+            //Testing finding 4 numbers the same
+            DieShown = 4;
+            for (int i = 0; i < DieShown; i++)
+            {
+                RollCount[game.GetRoll(i) - 1]++;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                if (RollCount[i] > Count)
+                {
+                    Count = RollCount[i];
+                }
+            }
+            Debug.Assert(Count == 4);
+
+            ResetRollCount(RollCount);
+            Count = 0;
+            //Testing finding 5 numbers the same
+            DieShown = 5;
+            for (int i = 0; i < DieShown; i++)
+            {
+                RollCount[game.GetRoll(i) - 1]++;
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                if (RollCount[i] > Count)
+                {
+                    Count = RollCount[i];
+                }
+            }
+            Debug.Assert(Count == 5);
+
+            ResetRollCount(RollCount);
+            Count = 0;
+            //Testing no numbers are the same
+            RollCount[game.GetRoll(4) - 1]++;
+            RollCount[game.GetRoll(5) - 1]++;
+
+            for (int i = 0; i < 6; i++)
+            {
+                if (RollCount[i] > Count)
+                {
+                    Count = RollCount[i];
+                }
+            }
+
+            Debug.Assert(Count == 1);
+
+            Console.WriteLine();
+            Console.WriteLine("Three Or More Test Successful");
+            Console.WriteLine("-----------------------------");
+        }
+
+        private int[] ResetRollCount(int[] RollCount)
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                RollCount[i] = 0;
+            }
+
+            return RollCount;
         }
 
 
-        public string TestDie()
-        {
-            for (int i = 0; i <= 10; i++)
-            {
-                Debug.Assert(_TestDie.Roll() >= 1 && _TestDie.Roll() <= 6);
-                Thread.Sleep(1);
-            }
-            return "DIE TEST SUCCESSFUL";
-        }
+
     }
 }

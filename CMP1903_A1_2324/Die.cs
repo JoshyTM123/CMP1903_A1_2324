@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CMP1903_A1_2324
@@ -14,13 +15,17 @@ namespace CMP1903_A1_2324
         //Property
         private int _value;
 
-        //Method
+        //Methods
+
+        //Die value will be a random number between 1 and 6 inclusive
         public int Roll()
         {
-            Random rnd = new Random(); //Creates an object from class Random
-            _value = rnd.Next(1, 7); //Die value will be a random number between 1 and 6 inclusive
+            Random rnd = new Random();
+            _value = rnd.Next(1, 7); 
             return _value; 
         }
+
+        
 
     }
 }
